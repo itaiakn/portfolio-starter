@@ -1,6 +1,6 @@
 # Images and media
 
-A portfolio is mostly images, so they decide how fast it feels. On the original project seventeen large PNGs made up most of every page's weight (11.3 MB); converting them took the set to 3.0 MB with no visible difference.
+A portfolio is mostly images, so they decide how fast it feels. Large PNG screenshots are usually most of a page's weight, and converting them often cuts it by two thirds or more with no visible difference.
 
 ## Formats
 
@@ -15,8 +15,6 @@ A portfolio is mostly images, so they decide how fast it feels. On the original 
 
 Not AVIF for now: slower to encode, and older Safari can't show it.
 
-Some noisy old screenshots come out *larger* as lossy than lossless. Keep those lossless even a little over the budget, since text crispness matters more.
-
 ## Converting
 
 `sharp` does it well. Install it in a scratch folder rather than as a project dependency, since the site doesn't need it at runtime:
@@ -29,8 +27,6 @@ await sharp(src).webp({ quality: 90, alphaQuality: 100 }).toFile(out)    // if l
 ```
 
 Keep the original full-size exports somewhere outside `site/` (a `design-sources/` folder, or the private `references/`), never in `dist/`.
-
-When downscaling an image, a "dithered" palette PNG (256 colours, often from an export preset) shimmers when it's scaled down or zoomed on hover. Re-export from the full-colour original, or downscale with area averaging (sharp's default `resize` does fine).
 
 ## No layout shift
 

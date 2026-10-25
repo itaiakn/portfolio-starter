@@ -20,11 +20,7 @@ What they get from then on:
 - push to `main` → production;
 - push any other branch → a preview deployment with its own URL. Under **Settings → Deployment Protection**, Vercel Authentication keeps previews visible only to their Vercel account, which is useful for unfinished case studies.
 
-### The Vercel CLI pitfall
-
-If they (or Claude) use the Vercel CLI (`vercel pull`, `vercel build`, `vercel dev`), run it from the **repository root**, linked to the existing project (`vercel link`, which writes `.vercel/project.json`). Run from `site/`, it offers to link that folder as a *new* project named "site" with no Root Directory, and that project then tries to build every push from the repo root and fails. If that happens, delete the stray project in the dashboard.
-
-`vercel dev` doesn't apply `headers` the way production does. To check headers and rewrites, look at `vercel build` output or test the preview deployment with `curl -I`.
+To check headers and rewrites, test a preview deployment with `curl -I <url>`; the local dev server doesn't apply `vercel.json`.
 
 ## 3. Security headers
 

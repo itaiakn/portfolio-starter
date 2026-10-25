@@ -41,12 +41,12 @@ Ask them what they want before writing any rules. Typical wishes:
 2. Case studies with client work **readable by a person or an agent they send the link to**, but not listed in search results.
 3. Their images and some or all pages kept out of AI training sets.
 
-The lesson that took two tries on the original project: **use `noindex`, not robots.txt `Disallow`, to keep a page out of search.**
+The key rule: **use `noindex`, not robots.txt `Disallow`, to keep a page out of search.**
 - `noindex` (an `X-Robots-Tag: noindex, noarchive` header from `vercel.json`, plus `<meta name="robots" content="noindex, noarchive">` in the page via `PageMeta`'s `noindex`): the crawler fetches the page, sees the tag and leaves it out. Agents can still read it.
 - `Disallow` in robots.txt does the opposite of what people expect: a crawler that can't fetch the page never sees its noindex, Google can still list a disallowed URL it finds linked elsewhere, and agents that respect robots.txt are turned away.
 
 So: robots.txt for *fetching* (images, AI-training crawlers), noindex for *search listing*. `templates/site/robots.txt` shows the pattern:
-- `User-agent: *` blocks only `/images/`, with an `Allow` line for each image that may be fetched: `/images/share/`, always, because link-preview bots (Twitterbot, LinkedInBot) respect robots.txt and would otherwise show cards with no image, plus anything else they want findable, such as a portrait.
+- `User-agent: *` blocks only `/images/`, with an `Allow` line for each image that may be fetched: `/images/share/`, always, because link-preview bots (Twitterbot, LinkedInBot) respect robots.txt and would otherwise show cards with no image, plus anything else they want findable, such as a portrait. The share cards also get an `X-Robots-Tag: noindex` header in `vercel.json`, so preview bots can fetch them but they stay out of image search. The AI-training group below doesn't inherit the `Allow`, so the cards stay blocked for it.
 - A separate group for AI-training crawlers (GPTBot, ClaudeBot, CCBot, Google-Extended, Applebot-Extended, Bytespider, meta-externalagent, …) that blocks images and any sensitive page. A crawler with its own group doesn't inherit `*`'s rules, so the group repeats them.
 - Agents that fetch a page only when a person asks (ChatGPT-User, Claude-User, Perplexity-User) stay out of that group, so a recruiter's agent still works.
 - Lists of crawler names change. Check each vendor's crawler page or darkvisitors.com for the current list.

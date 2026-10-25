@@ -19,7 +19,7 @@ This file is the single spec: it describes the site as it is **now**. Keep it th
 - From `site/`: `pnpm install`, `pnpm dev`, `pnpm build`. To check a production build: `pnpm build && pnpm preview`.
 - The build prerenders every page in `src/routes.tsx` to HTML (`src/entry-server.tsx`, `scripts/prerender.mjs`), plus `404.html`, `sitemap.xml` and `llms.txt`. Code that runs while a component renders must not touch browser-only APIs (`window`, `document`, `localStorage`, `matchMedia`): read them in effects or event handlers, or the build fails.
 - The site's address lives in one place, `siteUrl` in `site/src/content/site.ts`.
-- Not deployed yet. <!-- Once it is: Hosted on Vercel, linked to GitHub. Pushing `main` deploys production at https://<address>; other branches get preview deployments. --> Root Directory is `site`. Run the Vercel CLI from the repo root, never from `site/`.
+- Not deployed yet. <!-- Once it is: Hosted on Vercel, linked to GitHub. Pushing `main` deploys production at https://<address>; other branches get preview deployments. --> Root Directory is `site`.
 - Adding a page: an entry in `routes` and `pages` (`routes.tsx`), a rewrite in `vercel.json`, a `PageMeta` at the top of the page, and, if it should stay out of search, `noindex` on its PageMeta and its path in the noindex header rule in `vercel.json`.
 
 ## Crawling

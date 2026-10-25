@@ -26,7 +26,7 @@ Chrome, Edge and Safari 18.2+ animate it; other browsers just load the page. For
 
 ## Share cards, generated rather than hand-made
 
-Instead of designing a 1200×630 card per page in Figma, the original project renders them from the site's own pieces with headless Chrome: a small script builds an HTML page per card (cover image, name, title, in the site's fonts and colours), screenshots it at 1200×630, and writes it to `public/images/share/`. They then stay in step with the covers and copy. Rerun the script after changing a cover. Ask Claude to write one if they want this. Puppeteer or Playwright, installed in a scratch folder, works well.
+Instead of designing a 1200×630 card per page in Figma, you can render them from the site's own pieces with headless Chrome: a small script builds an HTML page per card (cover image, name, title, in the site's fonts and colours), screenshots it at 1200×630, and writes it to `public/images/share/`. They then stay in step with the covers and copy. Rerun the script after changing a cover. Ask Claude to write one if they want this. Puppeteer or Playwright, installed in a scratch folder, works well.
 
 ## Analytics
 

@@ -28,7 +28,7 @@ Why each part:
 
 ## One entry
 
-Keep a single configuration. The original project grew to five (spare servers on other ports so parallel Claude sessions could each have one, plus a build preview), and every session's preview picker then listed all five. One server serves the same folder for every session: if port 5173 is already running from another session, reuse it rather than adding a spare. Write that into their `CLAUDE.md`.
+Keep a single configuration. Extra entries (spare ports for parallel sessions, a build preview) all show up in every session's preview picker. One server serves the same folder for every session: if port 5173 is already running from another session, reuse it rather than adding a spare. Write that into their `CLAUDE.md`.
 
 To check a production build, run `pnpm build && pnpm preview` from `site/` instead of adding a second entry.
 

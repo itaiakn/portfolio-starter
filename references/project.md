@@ -53,9 +53,9 @@ Install fonts as packages from Fontsource (`pnpm add @fontsource-variable/inter`
 - **Variable** packages (`@fontsource-variable/...`) give every weight in one file.
 - To choose a font, a hidden comparison switcher (the same page in 3–6 candidate fonts, sizes held constant) helps more than looking at specimens. Offer it if they're undecided.
 
-## Habits that saved time on the original project
+## Habits that save time
 
-- **Never keep anything you care about in `dist/`.** Every build wipes it. The original project lost its 4K hero exports that way. Source files go in `site/public/` (shipped) or a folder outside `site/` (not shipped).
+- **Never keep anything you care about in `dist/`.** Every build wipes it. Source files go in `site/public/` (shipped) or a folder outside `site/` (not shipped).
 - **Run `pnpm build` before calling something done.** It type-checks, so it catches errors the dev server ignores.
 - **After `pnpm add`, restart the dev server.** A server started before a dependency was installed can serve two copies of React, which shows up as baffling "invalid hook call" errors.
 - **Design tokens in one place.** Colours, spacing, radii and type sizes as CSS custom properties in `index.css`, named by role (`--surface`, `--section-gap`), not by page. Changing a token then changes the whole site consistently. Put this rule in their `CLAUDE.md`.

@@ -18,7 +18,7 @@ The goal is a set of tools that keeps working next month. That means installing 
 command -v brew node pnpm git gh; node -v; pnpm -v
 ```
 
-If something is found, check where it lives (`command -v node`). A Node that sits inside another app's bundle (for example under `/Applications/Some App.app/...`) will disappear when that app updates. That happened on the original project and broke every build and the shadcn CLI until Node was installed properly. Recommend replacing it with Homebrew's.
+If something is found, check where it lives (`command -v node`). A Node that sits inside another app's bundle (for example under `/Applications/Some App.app/...`) will disappear when that app updates. Recommend replacing it with Homebrew's.
 
 ## Install (macOS)
 
@@ -30,7 +30,7 @@ If something is found, check where it lives (`command -v node`). A Node that sit
 
 ## Why PATH matters for Claude
 
-The Claude desktop app starts commands in a shell that may not read `~/.zprofile`, so `pnpm` can be "not found" even though it works in their terminal. Two fixes, used together on the original project:
+The Claude desktop app starts commands in a shell that may not read `~/.zprofile`, so `pnpm` can be "not found" even though it works in their terminal. Two fixes, used together:
 - `~/.zprofile` puts `/opt/homebrew/bin` on PATH (step 1 above).
 - `.claude/launch.json` runs the dev server through `zsh -lc "…"`, a login shell, so it reads that profile (see `preview.md`).
 
@@ -38,4 +38,4 @@ If a command fails with "command not found" inside Claude but works in Terminal,
 
 ## Windows or Linux
 
-The same tools apply. On Windows, suggest `winget install OpenJS.NodeJS.LTS Git.Git GitHub.cli`, then `npm install -g pnpm` (or `corepack enable`). On Linux, use the distribution's package manager or nvm for Node. The `launch.json` runtime then changes from `/bin/zsh -lc` to calling `pnpm` directly. Check the current docs; the original project was only ever run on a Mac.
+The same tools apply. On Windows, suggest `winget install OpenJS.NodeJS.LTS Git.Git GitHub.cli`, then `npm install -g pnpm` (or `corepack enable`). On Linux, use the distribution's package manager or nvm for Node. The `launch.json` runtime then changes from `/bin/zsh -lc` to calling `pnpm` directly. Check the current docs; this setup was only tested on a Mac.

@@ -40,6 +40,15 @@
           "value": "noindex, noarchive"
         }
       ]
+    },
+    {
+      "source": "/images/share/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
     }
   ]
 }
