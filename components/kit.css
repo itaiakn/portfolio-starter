@@ -1,0 +1,212 @@
+/* Component pack styles. Import after Tailwind and shadcn's CSS (see README).
+   The look is deliberately plain and comes from shadcn's theme tokens, so it follows light, dark and whatever theme you pick.
+   Restyle by changing the --kit-* variables below first, then edit any rule here: this file is yours.
+   The rules are unlayered on purpose, so they win over the shadcn component classes they adjust (the dialog, the buttons). */
+
+:root {
+  /* Surfaces: the panel media sits on, and the media inside it. */
+  --kit-surface: var(--muted);
+  --kit-surface-radius: calc(var(--radius) * 2);
+  --kit-surface-padding: clamp(1rem, 5%, 3rem);
+  --kit-media-radius: var(--radius);
+  --kit-media-shadow: 0 0 0 1px rgb(0 0 0 / .05), 0 2px 4px rgb(0 0 0 / .04), 0 16px 40px -16px rgb(0 0 0 / .2);
+  /* The same shadow as a filter, so it follows the shapes in a transparent image. */
+  --kit-shape-shadow: drop-shadow(0 0 .5px rgb(0 0 0 / .2)) drop-shadow(0 2px 4px rgb(0 0 0 / .04)) drop-shadow(0 12px 16px rgb(0 0 0 / .07));
+  --kit-media-gap: 2rem;
+  --kit-label-gap: .75rem;
+
+  /* Text and controls. */
+  --kit-foreground: var(--foreground);
+  --kit-muted-foreground: var(--muted-foreground);
+  --kit-background: var(--background);
+  --kit-border: var(--border);
+  --kit-caption-size: .875rem;
+  --kit-control-radius: 999px;
+  --kit-focus-ring: color-mix(in oklab, var(--foreground) 55%, var(--background));
+  --kit-hover-scale: 1.015;
+  --kit-ease: cubic-bezier(.2, .7, .2, 1);
+
+  /* Page frame: the gutter at the screen edge, and the top bar. */
+  --kit-gutter: 1.5rem;
+  --kit-topbar-height: 4rem;
+  --kit-topbar-width: 72rem;
+  --kit-glass: color-mix(in oklab, var(--background) 72%, transparent);
+  --kit-glass-blur: 16px;
+
+  /* Dialog scrim (behind the lightbox) and the lightbox's distance from the screen edge. */
+  --kit-scrim: rgb(0 0 0 / .1);
+  --kit-scrim-blur: 4px;
+  --kit-lightbox-inset: 1.5rem;
+  --kit-lightbox-bar: 2.25rem;
+
+  /* Toast pill (only when the Toaster is set up unstyled, see README). */
+  --kit-toast-background: var(--primary);
+  --kit-toast-foreground: var(--primary-foreground);
+}
+
+/* Phones. Keep the breakpoint in step with `phone` in TopBar.tsx. */
+@media (max-width: 43.75rem) {
+  :root {
+    --kit-gutter: 1.25rem;
+    --kit-topbar-height: 3.5rem;
+    --kit-media-gap: 1rem;
+    --kit-lightbox-inset: .75rem;
+  }
+}
+
+/* With the top bar on the page, in-page links scroll their target clear of it. */
+html:has(.kit-topbar) { scroll-padding-top: calc(var(--kit-topbar-height) + 1rem); }
+/* Elements that receive focus from script (Back to top moves it to the page heading) don't need a ring. */
+[tabindex="-1"]:focus { outline: none; }
+
+/* ---------- Media surface: every image, pair, comparison, split viewer and video sits on one ---------- */
+.kit-surface { background: var(--kit-surface); border-radius: var(--kit-surface-radius); padding: var(--kit-surface-padding); }
+/* Nested surfaces collapse into the parent. */
+.kit-surface .kit-surface { padding: 0; border-radius: 0; background: none; }
+.kit-surface :is(img, .kit-split-stage, .kit-loop-video-stage) { border-radius: var(--kit-media-radius); box-shadow: var(--kit-media-shadow); }
+.kit-surface .kit-split-layer img { border-radius: 0; box-shadow: none; }
+.kit-surface .kit-placeholder { background: var(--kit-background); }
+
+/* ---------- ImageLightbox ---------- */
+.kit-image { display: block; width: 100%; border: 0; font: inherit; color: inherit; text-align: inherit; cursor: zoom-in; }
+.kit-image.kit-image-static { cursor: default; }
+.kit-image img { display: block; width: 100%; height: auto; }
+.kit-image:focus-visible { outline: 2px solid var(--kit-focus-ring); outline-offset: 3px; }
+.kit-image.kit-image-cutout img { border-radius: 0; box-shadow: none; }
+.kit-image.kit-image-shaped img { border-radius: 0; box-shadow: none; filter: var(--kit-shape-shadow); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .kit-image img { transition: transform .2s ease; }
+  .kit-image:not(.kit-image-static):hover img { transform: scale(var(--kit-hover-scale)); }
+}
+
+/* ---------- Lightbox: the dialog becomes a frameless stage; controls sit above the media, never on it ---------- */
+body:has(.kit-lightbox) [data-slot="dialog-overlay"] { background: var(--kit-scrim); -webkit-backdrop-filter: blur(var(--kit-scrim-blur)); backdrop-filter: blur(var(--kit-scrim-blur)); }
+.kit-lightbox[data-slot="dialog-content"] { display: flex; flex-direction: column; gap: var(--kit-label-gap); width: fit-content; max-width: calc(100vw - var(--kit-lightbox-inset) * 2); max-height: none; padding: 0; overflow: visible; border: 0; border-radius: 0; background: transparent; color: var(--kit-foreground); box-shadow: none; }
+.kit-lightbox-bar { display: flex; align-items: center; gap: .75rem; min-height: var(--kit-lightbox-bar); }
+/* Caption and close each sit on a pill in the secondary grey, so they read over the blurred page behind. */
+.kit-lightbox-caption { display: inline-flex; align-items: center; margin-right: auto; min-height: var(--kit-lightbox-bar); padding: .375rem 1rem; border-radius: var(--kit-control-radius); background: var(--secondary); color: var(--secondary-foreground); font-size: var(--kit-caption-size); font-weight: 400; line-height: 1.5; text-align: left; }
+.kit-lightbox-close { flex: none; border-radius: var(--kit-control-radius); box-shadow: none; }
+.kit-lightbox-close:focus-visible { outline: 2px solid var(--kit-foreground); outline-offset: 3px; }
+.kit-lightbox-media { display: block; width: auto; height: auto; max-width: calc(100vw - var(--kit-lightbox-inset) * 2); max-height: calc(100dvh - var(--kit-lightbox-inset) * 2 - var(--kit-lightbox-bar) - var(--kit-label-gap)); object-fit: contain; border-radius: var(--kit-media-radius); }
+/* A shaped image keeps its surface in the preview, so its transparent gaps never show the dimmed page. */
+.kit-lightbox-shaped { padding: 2rem; border-radius: var(--kit-surface-radius); background: var(--kit-surface); }
+.kit-lightbox-shaped .kit-lightbox-media { max-width: calc(100vw - var(--kit-lightbox-inset) * 2 - 4rem); max-height: calc(100dvh - var(--kit-lightbox-inset) * 2 - var(--kit-lightbox-bar) - var(--kit-label-gap) - 4rem); border-radius: 0; filter: var(--kit-shape-shadow); }
+.kit-lightbox .kit-split-stage { width: min(calc(100vw - var(--kit-lightbox-inset) * 2), calc((100dvh - var(--kit-lightbox-inset) * 2 - var(--kit-lightbox-bar) - var(--kit-label-gap)) * var(--kit-ratio))); }
+@media (prefers-reduced-motion: reduce) {
+  .kit-lightbox, body:has(.kit-lightbox) [data-slot="dialog-overlay"] { animation-duration: .01ms !important; }
+}
+
+/* ---------- MediaPair, MediaCompare ---------- */
+.kit-media-grid { display: grid; gap: var(--kit-media-gap); }
+.kit-media-grid-side-by-side { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.kit-media-grid-side-by-side:where(:has(> :nth-child(3):last-child)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.kit-media-label { margin: 0 0 var(--kit-label-gap); color: var(--kit-muted-foreground); font-size: var(--kit-caption-size); font-weight: 500; line-height: 1.5; }
+/* Phone screens and thin UI strips: narrow columns, centered, side by side at every width. */
+.kit-media-grid:is(.kit-media-grid-portrait, .kit-media-grid-narrow) { display: flex; justify-content: center; }
+.kit-media-grid-portrait > * { flex: 0 1 20rem; }
+.kit-media-grid-narrow > * { flex: 0 1 14rem; }
+@media (max-width: 43.75rem) {
+  .kit-media-grid-side-by-side, .kit-media-grid-side-by-side:where(:has(> :nth-child(3):last-child)) { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- MediaPlaceholder ---------- */
+.kit-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem; width: 100%; margin: 0; padding: 1.5rem; border: 1px dashed var(--kit-border); border-radius: var(--kit-media-radius); background: var(--muted); color: var(--kit-muted-foreground); text-align: center; }
+.kit-placeholder svg { width: 1.5rem; height: 1.5rem; }
+.kit-placeholder figcaption { display: flex; flex-direction: column; gap: .25rem; font-size: var(--kit-caption-size); line-height: 1.5; overflow-wrap: anywhere; }
+.kit-placeholder strong { font-weight: 500; color: var(--kit-foreground); }
+
+/* ---------- Segmented control (BeforeAfterSplit's Before / After / Split) ---------- */
+.kit-segmented { display: inline-flex; gap: .25rem; padding: .25rem; border-radius: var(--kit-control-radius); background: color-mix(in oklab, var(--kit-foreground) 6%, transparent); font-size: var(--kit-caption-size); }
+.kit-segmented button { min-height: 2rem; padding-inline: 1rem; border: 0; border-radius: var(--kit-control-radius); background: none; color: var(--kit-muted-foreground); font: inherit; font-weight: 500; cursor: pointer; }
+.kit-segmented button[aria-pressed="true"] { background: var(--kit-background); color: var(--kit-foreground); box-shadow: 0 1px 3px rgb(0 0 0 / .08); }
+.kit-segmented button:focus-visible { outline: 2px solid var(--kit-focus-ring); outline-offset: 2px; }
+@media (prefers-reduced-motion: no-preference) { .kit-segmented button { transition: background-color .15s, color .15s; } }
+
+/* ---------- BeforeAfterSplit ---------- */
+.kit-split { display: flex; flex-direction: column; align-items: center; }
+.kit-split > .kit-split-stage { width: 100%; }
+.kit-split > .kit-segmented { margin-top: 1rem; }
+.kit-split-stage { position: relative; overflow: hidden; border-radius: var(--kit-media-radius); background: var(--muted); user-select: none; }
+/* Vertical swipes still scroll the page; horizontal drags move the divider. */
+.kit-split-stage-split { cursor: ew-resize; touch-action: pan-y; }
+.kit-split-layer { position: absolute; inset: 0; }
+.kit-split-layer img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; -webkit-user-drag: none; }
+.kit-split-layer .kit-placeholder { height: 100%; }
+.kit-split-stage-split .kit-split-layer-before { clip-path: inset(0 calc(100% - var(--kit-split)) 0 0); }
+.kit-split-label { position: absolute; top: 1rem; padding: .25rem .75rem; border-radius: var(--kit-control-radius); background: color-mix(in oklab, var(--kit-background) 90%, transparent); box-shadow: 0 1px 3px rgb(0 0 0 / .12); color: var(--kit-foreground); font-size: var(--kit-caption-size); font-weight: 500; line-height: 1.5; pointer-events: none; }
+.kit-split-label-before { left: 1rem; }
+.kit-split-label-after { right: 1rem; }
+.kit-split-handle { position: absolute; top: 0; bottom: 0; left: var(--kit-split); width: 2px; translate: -50% 0; background: var(--kit-background); box-shadow: 0 0 0 1px rgb(0 0 0 / .08), 0 0 8px rgb(0 0 0 / .15); outline: none; }
+.kit-split-knob { position: absolute; top: 50%; left: 50%; translate: -50% -50%; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: var(--kit-control-radius); background: var(--kit-background); color: var(--kit-foreground); box-shadow: 0 1px 6px rgb(0 0 0 / .2); }
+.kit-split-knob svg { width: 1.25rem; height: 1.25rem; }
+.kit-split-handle:focus-visible .kit-split-knob { outline: 2px solid var(--kit-focus-ring); outline-offset: 3px; }
+/* Before and After open the preview on click, with the same hover growth as a zoomable image. */
+.kit-split-stage-zoom { cursor: zoom-in; }
+.kit-split-stage-zoom:focus-visible { outline: 2px solid var(--kit-focus-ring); outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .kit-split-label { transition: opacity .15s; }
+  .kit-split-stage-zoom { transition: transform .2s ease; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .kit-split-stage-zoom:hover { transform: scale(var(--kit-hover-scale)); }
+}
+
+/* ---------- LoopVideo ---------- */
+.kit-loop-video-stage { position: relative; overflow: hidden; }
+.kit-loop-video-stage video { display: block; width: 100%; height: auto; }
+.kit-loop-video-button { position: absolute; right: 1rem; bottom: 1rem; border-radius: var(--kit-control-radius); box-shadow: 0 1px 6px rgb(0 0 0 / .2); }
+
+/* ---------- UserQuote ---------- */
+.kit-quote { margin: 0; padding-left: 1.25rem; border-left: 2px solid var(--kit-foreground); }
+.kit-quote blockquote { margin: 0; }
+.kit-quote p { margin: 0; font-size: 1.25rem; font-weight: 500; line-height: 1.4; color: var(--kit-foreground); }
+.kit-quote-cite { margin-top: var(--kit-label-gap); font-size: var(--kit-caption-size); font-weight: 500; line-height: 1.5; color: var(--kit-muted-foreground); }
+
+/* ---------- BackToTop ---------- */
+.kit-back-to-top { position: fixed; right: var(--kit-gutter); bottom: var(--kit-gutter); z-index: 40; border-radius: var(--kit-control-radius); box-shadow: 0 1px 4px rgb(0 0 0 / .12); opacity: 0; translate: 0 .5rem; pointer-events: none; }
+.kit-back-to-top[data-visible="true"] { opacity: 1; translate: 0 0; pointer-events: auto; }
+.kit-back-to-top-icons { position: relative; display: block; width: 1rem; height: 1rem; overflow: hidden; }
+.kit-back-to-top-icons svg { position: absolute; inset: 0; }
+.kit-back-to-top-icons svg + svg { transform: translateY(150%); }
+@media (hover: hover) {
+  .kit-back-to-top:hover .kit-back-to-top-icons svg { transform: translateY(-150%); }
+  .kit-back-to-top:hover .kit-back-to-top-icons svg + svg { transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .kit-back-to-top { transition: opacity .2s ease, translate .2s ease, background-color .15s ease; }
+  .kit-back-to-top-icons svg { transition: transform .35s var(--kit-ease); }
+}
+
+/* ---------- TopBar and its phone menu ---------- */
+.kit-topbar { position: fixed; inset-inline: 0; top: 0; z-index: 45; height: var(--kit-topbar-height); border-bottom: 1px solid transparent; }
+/* Once content scrolls under it: glass (tinted, blurred) with a hairline. */
+.kit-topbar[data-scrolled]:not([data-open]) { background: var(--kit-glass); -webkit-backdrop-filter: blur(var(--kit-glass-blur)) saturate(1.4); backdrop-filter: blur(var(--kit-glass-blur)) saturate(1.4); border-color: var(--kit-border); }
+.kit-topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: min(var(--kit-topbar-width), calc(100% - var(--kit-gutter) * 2)); height: 100%; margin-inline: auto; }
+.kit-topbar-start { display: flex; align-items: center; gap: .75rem; min-width: 0; }
+.kit-topbar-home { color: var(--kit-foreground); font-size: 1rem; font-weight: 600; line-height: 1.5; text-decoration: none; white-space: nowrap; }
+.kit-topbar-home:focus-visible { outline: 2px solid var(--kit-focus-ring); outline-offset: 4px; border-radius: 2px; }
+.kit-topbar-actions { display: flex; align-items: center; gap: .5rem; }
+.kit-menu-button { display: none; }
+/* With `revealAfter`, the bar is away (`data-away`) until its target has scrolled past the top, then slides in from above. */
+.kit-topbar[data-away]:not([data-open]) { translate: 0 -100%; opacity: 0; visibility: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  .kit-topbar { transition: background-color .2s, border-color .2s; }
+  .kit-topbar[data-reveal] { transition: background-color .2s, border-color .2s, translate .35s var(--kit-ease), opacity .3s, visibility 0s; }
+  .kit-topbar[data-reveal][data-away]:not([data-open]) { transition-delay: 0s, 0s, 0s, 0s, .35s; }
+}
+/* The phone menu: the same glass over the whole viewport, under the bar, with the links stacked full width. */
+.kit-menu { position: fixed; inset: 0; z-index: 44; padding-top: var(--kit-topbar-height); background: var(--kit-glass); -webkit-backdrop-filter: blur(var(--kit-glass-blur)) saturate(1.4); backdrop-filter: blur(var(--kit-glass-blur)) saturate(1.4); overflow-y: auto; overscroll-behavior: contain; }
+.kit-menu-inner { display: flex; flex-direction: column; align-items: stretch; gap: .75rem; width: min(var(--kit-topbar-width), calc(100% - var(--kit-gutter) * 2)); margin-inline: auto; padding-block: 1.5rem; }
+.kit-menu-inner > * { justify-content: flex-start; min-height: 3rem; font-size: 1rem; }
+@media (max-width: 43.75rem) {
+  .kit-topbar-actions { display: none; }
+  .kit-menu-button { display: inline-flex; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .kit-topbar[data-scrolled]:not([data-open]), .kit-menu { background: var(--kit-background); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+/* ---------- Toast pill (optional; used when the Toaster is unstyled with `kit-toast`, see README) ---------- */
+.kit-toast { display: flex; align-items: center; gap: .5rem; width: fit-content; margin-inline: auto; padding: .625rem 1rem; border-radius: var(--kit-control-radius); background: var(--kit-toast-background); color: var(--kit-toast-foreground); box-shadow: 0 4px 16px rgb(0 0 0 / .16); font-size: var(--kit-caption-size); font-weight: 500; line-height: 1.5; }
+/* Sonner pins each toast to the left of its strip; pinning both edges lets the fit-content pill center itself. */
+[data-sonner-toast].kit-toast { right: 0; left: 0; }

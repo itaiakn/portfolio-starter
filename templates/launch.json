@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": [
+        "-lc",
+        "pnpm --dir site dev --port 5173 --strictPort"
+      ],
+      "port": 5173
+    }
+  ]
+}

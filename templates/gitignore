@@ -1,0 +1,12 @@
+.DS_Store
+node_modules/
+dist/
+dist-ssr/
+*.tsbuildinfo
+.env*
+!.env.example
+.pnpm-store/
+.vercel
+.claude/settings.local.json
+# Private inspiration, screenshots and drafts: Claude can read them, git never ships them.
+references/

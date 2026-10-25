@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="One line about what you do." />
+    <title>Your Name</title>
+    <!-- Add favicon.png (48px) and apple-touch-icon.png (180px) to public/, or remove these two links until you have them. -->
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- blocking="render": the first paint waits for the app, so pages never flash empty (see vite.config.ts). -->
+    <script type="module" src="/src/main.tsx" blocking="render"></script>
+  </head>
+  <!-- The prerender (scripts/prerender.mjs) fills this empty #root with each page's HTML; keep it exactly as written. -->
+  <body><div id="root"></div></body>
+</html>

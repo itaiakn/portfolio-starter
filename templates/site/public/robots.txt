@@ -1,0 +1,27 @@
+# Images are off-limits to crawlers unless allowed here one by one.
+# Pages are never blocked here: a page that should stay out of search results gets a noindex header (vercel.json) instead, which
+# keeps it out of results while letting an agent someone sends there read it. A crawler has to fetch a page to see its noindex.
+User-agent: *
+# Share cards: link-preview bots (Twitterbot, LinkedInBot) respect robots.txt, so without this links get cards with no image.
+Allow: /images/share/
+Allow: /images/portrait.webp
+Disallow: /images/
+
+# Crawlers that collect AI training data get no images (and, if you list them, no sensitive pages). Agents that fetch a page only
+# when a person asks (ChatGPT-User, Claude-User, Perplexity-User) are not listed, so someone can still point one at your site.
+# A group of its own doesn't inherit the * rules, so it repeats the image block. Check each vendor's crawler page or
+# darkvisitors.com for current names.
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Bytespider
+User-agent: meta-externalagent
+User-agent: Amazonbot
+User-agent: cohere-ai
+User-agent: Diffbot
+User-agent: omgili
+User-agent: PerplexityBot
+Disallow: /images/
