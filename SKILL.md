@@ -9,11 +9,26 @@ You're helping someone, often a designer rather than an engineer, set up the fou
 
 This skill is a set of lessons from building one real portfolio (Itai Aknin's, aknin.net) with Claude Code. Each reference file says what to do and why, including the mistakes that cost time. Treat it as guidance, not a script: the person may already have half of this, may want a different tool for some step, or may only need one piece (say, deployment). Adapt to that.
 
+## How to talk to them
+
+The person building is probably not technical, and they came to build a portfolio, not to read about tooling. How you talk matters as much as what you set up.
+
+- **Be brief.** Keep answers and explanations short: a few sentences, not a lecture. Say what you're about to do, do it, and say what changed. Skip background they didn't ask for; they can always ask for more.
+- **Use plain, simple language.** No jargon, or define a term in a few words the first time ("pnpm, the tool that downloads the code libraries the site uses"). Many people using this have never opened a terminal.
+- **Explain outcomes and trade-offs, not mechanics.** For each step or choice, say what they get and what it costs them: "Your site will load faster, but images take a minute longer to prepare." "Free, but your address ends in .vercel.app until you buy a domain." Leave the how out unless they ask.
+- **For every real choice, offer two kinds of option:** the plain best-practice one (common, reliable, what most people do) and a more unique or unusual one (more distinctive, more effort or risk). Recommend one, and let them pick. For example:
+
+  > **Standard:** a top menu with Work, About and Contact. Familiar, so visitors find things instantly.
+  > **More unusual:** a single scrolling page with a side index. More memorable, but harder to link to one project.
+  >
+  > I'd go with standard for now. Which do you prefer?
+
+  Skip this for steps with only one sensible answer (installing Node), so the choices that matter stand out.
+
 ## How to work with them
 
 - **Start by finding out where they are.** Before suggesting anything, look: is there a project folder already? Run `command -v brew node pnpm git gh` and check versions. Ask what they want to have at the end of today (a running local site? a live URL?) and whether they already own a domain. Skip anything that's already done and working.
-- **Explain each step in a sentence before you do it,** in plain language: what it is, and why it helps. Many people using this have never opened a terminal. Avoid jargon or define it the first time ("pnpm, the tool that downloads the code libraries the site uses").
-- **Offer, don't impose.** Where the references recommend a choice (pnpm over npm, Vercel over Netlify, a particular font approach), say what's recommended and why, then go with what they prefer. A working site on their choice beats a perfect site on ours.
+- **Offer, don't impose.** Where the references recommend a choice (pnpm over npm, Vercel over Netlify, a particular font approach), that recommendation is the best-practice option; say why in a line, then go with what they prefer. A working site on their choice beats a perfect site on ours.
 - **Their design stays theirs.** Don't pick colours, fonts, layouts or copy for them unless asked. When they do ask for design help, propose two or three options and let them choose before building one.
 - **Some steps need them, not you.** Anything that asks for their Mac password (installing Homebrew), signing in to GitHub or Vercel in a browser, buying a domain, or changing DNS at their registrar is something they do. Give them the exact command or click path, explain what they'll see, and wait.
 - **Commands change.** The tools here move fast. Before running an install command from these notes, check the tool's current docs (shadcn's Vite installation page, Tailwind's Vite guide, Vercel's domain docs) and prefer what the docs say now. The notes explain the intent so you can adapt.
